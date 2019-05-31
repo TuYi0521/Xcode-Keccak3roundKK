@@ -10,10 +10,10 @@
 
 void InKernelAtCStructureConstruct::genInputforAllActiveSbox(DualVector slicePatternCase,TriVector& activeSboxAllCase) {
     std::vector<RowValue> set1{1, 2, 4, 8, 16};
-    std::vector<RowValue> set2{3, 5, 6, 9, 10, 12, 17, 18, 20, 24};
-    std::vector<RowValue> set3{7, 11, 13, 14, 19, 21, 22, 25, 26, 28};
+    std::vector<RowValue> set2{3, 5, 6, 9, 10, 12, 17, 18, 20, 24};//10
+    std::vector<RowValue> set3{7, 11, 13, 14, 19, 21, 22, 25, 26, 28};//10
     std::vector<RowValue> set4{15, 23, 27, 29, 30};
-    std::vector<RowValue> set5{31};
+    std::vector<RowValue> set5{31};// 5 bits 1
 
     int Case, nSbox;
     //each case indicates 1)number of active sboxes 2)number of bits within each Sbox
@@ -104,7 +104,7 @@ void InKernelAtCStructureConstruct::twoSboxValuePatternSearch(TriVector activeSb
             }
         }
     }
-    // printValueSlicePattern(valuePattern2);
+//    printValueSlicePattern(valuePattern2);
 }
 
 void InKernelAtCStructureConstruct::threeSboxValuePatternSearch(TriVector activeSboxAllCase, int DDTOutput[32][32], multisetSet& valuePattern3){
@@ -144,7 +144,7 @@ void InKernelAtCStructureConstruct::threeSboxValuePatternSearch(TriVector active
             }
         }
     }
-    // printValueSlicePattern(valuePattern3);
+//     printValueSlicePattern(valuePattern3);
 }
 
 
@@ -194,7 +194,7 @@ void InKernelAtCStructureConstruct::fourSboxValuePatternSearch(TriVector activeS
             }
         }
     }
-    // printValueSlicePattern(valuePattern4);
+//     printValueSlicePattern(valuePattern4);
 }
 
 void InKernelAtCStructureConstruct::fiveSboxValuePatternSearch(TriVector activeSboxAllCase, int DDTOutput[32][32], multisetSet& valuePattern5){
@@ -252,7 +252,7 @@ void InKernelAtCStructureConstruct::fiveSboxValuePatternSearch(TriVector activeS
             }
         }
     }
-    // printValueSlicePattern(valuePattern5);
+//     printValueSlicePattern(valuePattern5);
 }
 
 
@@ -351,6 +351,15 @@ void InKernelAtCStructureConstruct::generateValidSliceValuePattern(unsigned int 
             TriVector activeSbox4;
             DualVector fiveSboxSlice{{1,1,1,1,1}};
             TriVector activeSbox5;
+//            genInputforAllActiveSbox(twoSboxSlice, activeSbox2);
+//            twoSboxValuePatternSearch(activeSbox2, DDTOutput, patternSet);
+//            genInputforAllActiveSbox(threeSboxSlice, activeSbox3);
+//            threeSboxValuePatternSearch(activeSbox3, DDTOutput, patternSet);
+//            genInputforAllActiveSbox(fourSboxSlice, activeSbox4);
+//            fourSboxValuePatternSearch(activeSbox4, DDTOutput, patternSet);
+//            genInputforAllActiveSbox(fiveSboxSlice, activeSbox5);
+//            fiveSboxValuePatternSearch(activeSbox5, DDTOutput, patternSet);
+            
             genInputforAllActiveSbox(twoSboxSlice, activeSbox2);
             genInputforAllActiveSbox(threeSboxSlice, activeSbox3);
             genInputforAllActiveSbox(fourSboxSlice, activeSbox4);
@@ -358,8 +367,9 @@ void InKernelAtCStructureConstruct::generateValidSliceValuePattern(unsigned int 
             twoSboxValuePatternSearch(activeSbox2, DDTOutput, patternSet);
             threeSboxValuePatternSearch(activeSbox3, DDTOutput, patternSet);
             fourSboxValuePatternSearch(activeSbox4, DDTOutput, patternSet);
-            fiveSboxValuePatternSearch(activeSbox5, DDTOutput, patternSet);
+            fiveSboxValuePatternSearch(activeSbox5, DDTOutput, patternSet);//until here, right
         }
+            break;
             
         //case 6
             
@@ -384,17 +394,17 @@ void InKernelAtCStructureConstruct::generateValidSliceValuePattern(unsigned int 
         }
             break;
         default:
-            ;
+            break;
     }
 }
 
 void InKernelAtCStructureConstruct:: initializeValuePatterns(void)
 {   // active bits of a slice
     generateValidSliceValuePattern(2, valuePatternSet2);
-//    generateValidSliceValuePattern(3, valuePatternSet3);
-//    generateValidSliceValuePattern(4, valuePatternSet4);
-//    generateValidSliceValuePattern(5, valuePatternSet5);
-//    generateValidSliceValuePattern(6, valuePatternSet6);
+    generateValidSliceValuePattern(3, valuePatternSet3);
+    generateValidSliceValuePattern(4, valuePatternSet4);
+    generateValidSliceValuePattern(5, valuePatternSet5);
+    generateValidSliceValuePattern(6, valuePatternSet6);
     
 //        printValueSlicePattern(valuePatternSet2);
 //        printValueSlicePattern(valuePatternSet3);
@@ -1110,6 +1120,7 @@ void InKernelAtCStructureConstruct::completeStructureOfOtherKnot4222(){
 
 
 bool InKernelAtCStructureConstruct::nextStructureOfOtherKnot3322A(){
+    count++;
     if (!isInitialStructureOfOtherKnot) {
         vector<BitPosition> aPeerA, aPeerB;
         vector<unsigned int> aYOffset;

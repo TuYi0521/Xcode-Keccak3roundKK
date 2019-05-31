@@ -757,6 +757,7 @@ bool InKernelAtCFilter::updateIndex(vector<unsigned int> & index, const vector<v
 void InKernelAtCFilter::outputTrailCore(const string& fileName){
     ofstream fout(fileName.c_str(), ios::app);
     Trail trail;
+    trail.setFirstStateReverseMinimumWeight(getMinReverseWeight(stateAtA));
     trail.append(workCore.back().stateAtB, workCore.back().weightAtB);
 //    trail.append(workCore.back().minimalStateAtB, workCore.back().weightAtB);
     trail.save(fout);

@@ -58,8 +58,8 @@ public:
     void test();
 
 protected:
-    string fileName = "/Users/niklaus/Desktop/InKernelAtCTrailCoreSearch/Core.txt";
-    string fileName2 = "/Users/niklaus/Desktop/InKernelAtCTrailCoreSearch/Core60.txt";
+    string fileName = "/Users/niklaus/Desktop/InKernelAtCTrailCoreSearch/Core-60.txt";
+    string fileName2 = "/Users/niklaus/Desktop/InKernelAtCTrailCoreSearch/Core.txt";
 };
 
 #endif /* MyTrailCoreInKernelAtC_hpp */

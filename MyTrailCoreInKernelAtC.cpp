@@ -14,18 +14,45 @@ MyTrailCoreInKernelAtC::MyTrailCoreInKernelAtC(unsigned int aMaxWeight, KeccakFD
 }
 
 void MyTrailCoreInKernelAtC::XPeers2Slices(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
+    count=0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        valuepatterncount++;
         set<SliceValue> allSlicePatternsForOneValuePattern;
         getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
-
+        
         set<SliceValue> :: iterator itOneSlicePattern;
         for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            count++;
             startingKnotPoints.clear();
             yOffset.clear();
             getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
+            isInitialStructure = false;
+            isLastStructureOfStartingKnot = false;
+            do {
+                if (nextStructureOfStaringKnot()) {
+                    knotsAtB.clear();
+                    if (filterOnPeerRhoOffset_XPeers2Slices()) {
+                        //                        cout << "Pass the filter on rho offsets!" << endl;
+                        if (checkKnotsAtBInKernelAtC()) {
+                            //                            cout << "Pass the filter on knots at B!" << endl;
+                            if (updateSetOfMinimalStatesUpToNow()) {
+                                //                                cout << "Pass the duplication of state B test!" << endl;
+                                prepareOutputTrailCore();
+                                if (workCore.back().partialWeight <= maxWeight) {
+                                    cout<<"XPeers2Slices "<<" weight:"<<workCore.back().partialWeight<<endl;
+                                    outputTrailCore(fileName);
+                                }
+                            }
+                        }
+                    }
+                }
+            } while (!isLastStructureOfStartingKnot);
         }
     }
+    cout<<"value pattern count:"<<valuepatterncount<<"= 2^"<<log(valuepatterncount)/log(2)<<endl;
+    cout<<"slice pattern for all value pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
 }
 
 void MyTrailCoreInKernelAtC::Case422(const multisetSet aValuePatternSet){
@@ -65,35 +92,59 @@ void MyTrailCoreInKernelAtC::Case422(const multisetSet aValuePatternSet){
 
 
 void MyTrailCoreInKernelAtC::Case532(const multisetSet aValuePatternSet){
+    valuepatterncount=1;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        cout<<"dealing with value pattern:"<<valuepatterncount<<"= 2^"<<log(valuepatterncount)/log(2)<<endl;
         set<SliceValue> allSlicePatternsForOneValuePattern;
         getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
-
+        valuepatterncount++;
         set<SliceValue> :: iterator itOneSlicePattern;
+        slicepatternForAvaluepattern=0;
+        
         for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
             startingKnotPoints.clear();
-            yOffset.clear();
+            
             getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
-            isInitialStructure = false;
-            isLastStructureOfStartingKnot = false;
-            do {
-                nextStructureOfStaringKnot();
-                                knotsAtB.clear();
-                                if (filterOnPeerRhoOffset_532()) {
-                                    if (checkKnotsAtBInKernelAtC()) {
-                                        if (updateSetOfMinimalStatesUpToNow()) {
-                                            prepareOutputTrailCore();
-                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                outputTrailCore(fileName);
-                                            }
-                                        }
-                                    }
 
+//            count=0;
+            slicepatternForAvaluepattern++;
+            if (startingKnotPoints.size()==5) {
+                yOffset.clear();
+                isInitialStructure = false;
+                isLastStructureOfStartingKnot = false;
+                 do {
+                    nextStructureOfStaringKnot();
+//                    count++;
+                    knotsAtB.clear();
+                    if (filterOnPeerRhoOffset_532()) {
+                        if (knotsAtB.size()==3) {
+                            if (checkKnotsAtBInKernelAtC()) {
+                                if (updateSetOfMinimalStatesUpToNow()) {
+                                    prepareOutputTrailCore();
+                                    if (workCore.back().partialWeight <= maxWeight) {
+                                        outputTrailCore(fileName);
+                                    }
                                 }
-            } while (!isLastStructureOfStartingKnot);
+                            }
+                        }
+                    }
+            
+                 } while (!isLastStructureOfStartingKnot);
+//                cout<<"structure for a slice pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;//all 1025
+//                counts.push_back(count);
+             }
+            else{
+                cout<<"Error happened! startingKnotPoints.size() = "<<startingKnotPoints.size()<<endl;
+                cout<<"Error! slice pattern number for a value pattern:"<<slicepatternForAvaluepattern<<"= 2^"<<log(slicepatternForAvaluepattern)/log(2)<<endl;
+                cout<<"Error happened in value pattern number:"<<valuepatterncount<<endl;
+                break;
+            }
         }
+//        cout<<"slice pattern number for a value pattern:"<<slicepatternForAvaluepattern<<"= 2^"<<log(slicepatternForAvaluepattern)/log(2)<<endl;
+        
     }
+    
 }
 
 void MyTrailCoreInKernelAtC::Case332(){
@@ -181,7 +232,7 @@ void MyTrailCoreInKernelAtC::Case442(){
                                             if (checkKnotsAtBInKernelAtC()) {
                                                 if (updateSetOfMinimalStatesUpToNow()) {
                                                     prepareOutputTrailCore();
-                                                    if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
+                                                    if (workCore.back().partialWeight <= maxWeight) {
                                                         outputTrailCore(fileName);
                                                     }
                                                 }
@@ -244,7 +295,7 @@ void MyTrailCoreInKernelAtC::Case3322C(const multisetSet aValuePatternSet){
                                                             if (knotsAtB.size()==4) {
                                                                 if (updateSetOfMinimalStatesUpToNow()) {
                                                                     prepareOutputTrailCore();
-                                                                    if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
+                                                                    if (workCore.back().partialWeight <= maxWeight) {
                                                                         outputTrailCore(fileName);
                                                                     }
                                                                 }
@@ -310,7 +361,7 @@ void MyTrailCoreInKernelAtC::Case3322B(const multisetSet aValuePatternSet){
                                                     if (knotsAtB.size()==4) {
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
-                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
+                                                            if (workCore.back().partialWeight <= maxWeight) {
                                                                 outputTrailCore(fileName);
                                                             }
                                                         }
@@ -347,8 +398,11 @@ void MyTrailCoreInKernelAtC::Case3322B(const multisetSet aValuePatternSet){
 }
 
 void MyTrailCoreInKernelAtC::Case3322A(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
+    count=0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        valuepatterncount++;
         set<SliceValue> allSlicePatternsForOneValuePattern;
         getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
         set<SliceValue> :: iterator itOneSlicePattern;
@@ -376,7 +430,7 @@ void MyTrailCoreInKernelAtC::Case3322A(const multisetSet aValuePatternSet){
                                                         if (knotsAtB.size()==4) {
                                                             if (updateSetOfMinimalStatesUpToNow()) {
                                                                 prepareOutputTrailCore();
-                                                                if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
+                                                                if (workCore.back().partialWeight <= maxWeight) {
                                                                     outputTrailCore(fileName);
                                                                 }
                                                             }
@@ -410,6 +464,7 @@ void MyTrailCoreInKernelAtC::Case3322A(const multisetSet aValuePatternSet){
             }
         }
     }
+    cout<<"count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
 }
 
 
@@ -446,7 +501,7 @@ void MyTrailCoreInKernelAtC::Case4222(const multisetSet aValuePatternSet){
                                                     if (knotsAtB.size()==4) {
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
-                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
+                                                            if (workCore.back().partialWeight <= maxWeight) {
                                                                 outputTrailCore(fileName);
                                                             }
                                                         }
@@ -512,7 +567,7 @@ void MyTrailCoreInKernelAtC::Case433(const multisetSet aValuePatternSet){
                                                 if (checkKnotsAtBInKernelAtC()) {
                                                     if (updateSetOfMinimalStatesUpToNow()) {
                                                         prepareOutputTrailCore();
-                                                        if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
+                                                        if (workCore.back().partialWeight <= maxWeight) {
                                                             outputTrailCore(fileName);
                                                         }
                                                     }
@@ -536,11 +591,13 @@ void MyTrailCoreInKernelAtC::Case433(const multisetSet aValuePatternSet){
             }
         }
     }
+    cout<<"count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
 }
 
 
 
 void MyTrailCoreInKernelAtC::Case6x(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
@@ -625,14 +682,15 @@ void MyTrailCoreInKernelAtC::XorbitalsPerslice2Bits(const multisetSet aValuePatt
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
                                                             //Deal with all such trail cores.
-                                                            if (workCore.back().partialWeight <=80) {
-                                                                count++;
-                                                                cout<<"weight:"<<workCore.back().partialWeight<<endl;
+                                                            if (workCore.back().partialWeight <= maxWeight) {
+//                                                                count++;
+//                                                                cout<<"weight:"<<workCore.back().partialWeight<<endl;
+                                                                cout<<"chain "<<"orbital number "<<nrObitals<<" weight:"<<workCore.back().partialWeight<<endl;
                                                                 outputTrailCore(fileName);
-                                                                if (workCore.back().partialWeight <=maxWeight) {
-                                                                    weights.push_back(workCore.back().partialWeight);
-                                                                    outputTrailCore(fileName2);
-                                                                }
+//                                                                if (workCore.back().partialWeight <=maxWeight) {
+//                                                                    weights.push_back(workCore.back().partialWeight);
+//                                                                    outputTrailCore(fileName2);
+//                                                                }
                                                                 
                                                             }
                                                         }
@@ -692,12 +750,13 @@ void MyTrailCoreInKernelAtC::XorbitalsPerslice2Bits(const multisetSet aValuePatt
             }while (!isLastStructureOfStartingKnot);
         }
     }
-    cout<<"total number of trails:"<<count<<endl;
-    cout<<"total <=60 trails:"<<weights.size()<<endl;
+//    cout<<"total number of trails:"<<count<<endl;
+//    cout<<"total <=60 trails:"<<weights.size()<<endl;
 }
 
 
 void MyTrailCoreInKernelAtC::Case42222A(const multisetSet aValuePatternSet1,const multisetSet aValuePatternSet2){
+    valuepatterncount=0;
     multisetSet :: iterator itOneValuePattern,itOneValuePattern2;
     for (itOneValuePattern = aValuePatternSet1.begin(); itOneValuePattern != aValuePatternSet1.end(); itOneValuePattern ++) {
         set<SliceValue> allSlicePatternsForOneValuePattern;
@@ -986,6 +1045,7 @@ void MyTrailCoreInKernelAtC::Case222(const multisetSet aValuePatternSet){
 
 
 void MyTrailCoreInKernelAtC::Case42222B(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         set<SliceValue> allSlicePatternsForOneValuePattern;
@@ -1029,8 +1089,8 @@ void MyTrailCoreInKernelAtC::Case42222B(const multisetSet aValuePatternSet){
                                                                 
                                                                 if (updateSetOfMinimalStatesUpToNow()) {
                                                                     prepareOutputTrailCore();
-                                                                    //                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                                    if (workCore.back().partialWeight > 52) {
+                                                                    if (workCore.back().partialWeight <= maxWeight) {
+                                                                        cout<<"4222B weight:"<<workCore.back().partialWeight<<endl;
                                                                         outputTrailCore(fileName);
                                                                     }
                                                                 }
@@ -1072,6 +1132,7 @@ void MyTrailCoreInKernelAtC::Case42222B(const multisetSet aValuePatternSet){
 
 
 void MyTrailCoreInKernelAtC::Case42222C(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
@@ -1107,8 +1168,8 @@ void MyTrailCoreInKernelAtC::Case42222C(const multisetSet aValuePatternSet){
                                                         
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
-                                                            //                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                            if (workCore.back().partialWeight > 52) {
+                                                            if (workCore.back().partialWeight <= maxWeight) {
+                                                                cout<<"4222C weight:"<<workCore.back().partialWeight<<endl;
                                                                 outputTrailCore(fileName);
                                                             }
                                                         }
@@ -1145,9 +1206,9 @@ void MyTrailCoreInKernelAtC::Case42222C(const multisetSet aValuePatternSet){
     }
 }
 
-
+//need to check
 void MyTrailCoreInKernelAtC::Case33222A(const multisetSet aValuePatternSet, const multisetSet aValuePatternSet2){
-    
+    valuepatterncount=0;
     multisetSet :: iterator itOneValuePattern,itOneValuePattern2;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
@@ -1158,6 +1219,7 @@ void MyTrailCoreInKernelAtC::Case33222A(const multisetSet aValuePatternSet, cons
         set<SliceValue> :: iterator itOneSlicePattern;
         count=0;
         for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            count++;
             startingKnotPoints.clear();
             yOffset.clear();
             getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
@@ -1221,6 +1283,7 @@ void MyTrailCoreInKernelAtC::Case33222A(const multisetSet aValuePatternSet, cons
                                                                                             prepareOutputTrailCore();
                                                                                             //Deal with all such trail cores.
                                                                                             if (workCore.back().partialWeight <= maxWeight) {
+                                                                                                cout<<"33222A weight: "<<workCore.back().partialWeight<<endl;
                                                                                                 outputTrailCore(fileName);
                                                                                             }
                                                                                         }
@@ -1270,7 +1333,7 @@ void MyTrailCoreInKernelAtC::Case33222A(const multisetSet aValuePatternSet, cons
             }
             
         }
-        cout<<"structure for a value pattern count"<<endl;
+        cout<<"structure for a value pattern count: "<<count<<endl;
         counts.push_back(count);
     }
 }
@@ -1278,9 +1341,11 @@ void MyTrailCoreInKernelAtC::Case33222A(const multisetSet aValuePatternSet, cons
 
 
 void MyTrailCoreInKernelAtC::Case33222B(const multisetSet aValuePatternSet){
-    
+    valuepatterncount =0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        valuepatterncount++;
+        count=0;
         set<SliceValue> allSlicePatternsForOneValuePattern;
         getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
         set<SliceValue> :: iterator itOneSlicePattern;
@@ -1302,14 +1367,15 @@ void MyTrailCoreInKernelAtC::Case33222B(const multisetSet aValuePatternSet){
                                 if ((peersAtA.size() == 3) && (peerParameterOnRho.size() == 3)) {
                                     if (nextP456OfOtherKnot33222B()) {
                                         if ((peersAtA.size()==6) && (peerParameterOnRho.size()==6)) {
+                                            count++;
                                             if (filterOnPeerRhoOffset_33222B()) {
                                                 knotsAtB.clear();
                                                 if (checkKnotsAtBInKernelAtC()) {
                                                     if (knotsAtB.size()==5) {
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
-//                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                            if (workCore.back().partialWeight > 52) {
+                                                            if (workCore.back().partialWeight <= maxWeight) {
+                                                                cout<<"33222B weight:"<<workCore.back().partialWeight<<endl;
                                                                 outputTrailCore(fileName);
                                                             }
                                                         }
@@ -1344,12 +1410,14 @@ void MyTrailCoreInKernelAtC::Case33222B(const multisetSet aValuePatternSet){
                 yOffset.pop_back();
             }
         }
+        cout<<"structure for a value pattern count:"<<count<<endl;
     }
+    cout<<"value pattern count: "<<valuepatterncount<<endl;
 }
 
 
 void MyTrailCoreInKernelAtC::Case33222C1(const multisetSet aValuePatternSet, const multisetSet aValuePatternSet2){
-    
+    valuepatterncount =0;
     multisetSet :: iterator itOneValuePattern,itOneValuePattern2;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
@@ -1426,8 +1494,9 @@ void MyTrailCoreInKernelAtC::Case33222C1(const multisetSet aValuePatternSet, con
                                                                                         
                                                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                                                             prepareOutputTrailCore();
-                                                                                            //                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                                                            if (workCore.back().partialWeight > 52) {
+                                                                                          
+                                                                                            if (workCore.back().partialWeight <= maxWeight) {
+                                                                                                cout<<"33222C1 weight:"<<workCore.back().partialWeight<<endl;
                                                                                                 outputTrailCore(fileName);
                                                                                             }
                                                                                         }
@@ -1479,14 +1548,14 @@ void MyTrailCoreInKernelAtC::Case33222C1(const multisetSet aValuePatternSet, con
             }
             
         }
-        cout<<"structure for a value pattern count"<<endl;
+        cout<<"structure for a value pattern count:"<<count<<endl;
         counts.push_back(count);
     }
 }
 
 
 void MyTrailCoreInKernelAtC::Case33222C2(const multisetSet aValuePatternSet){
-    
+    valuepatterncount =0;
     multisetSet :: iterator itOneValuePattern;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
@@ -1495,7 +1564,7 @@ void MyTrailCoreInKernelAtC::Case33222C2(const multisetSet aValuePatternSet){
         set<SliceValue> allSlicePatternsForOneValuePattern;
         getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
         set<SliceValue> :: iterator itOneSlicePattern;
-        count=0;
+//        count=0;
         for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
             startingKnotPoints.clear();
             yOffset.clear();
@@ -1507,7 +1576,7 @@ void MyTrailCoreInKernelAtC::Case33222C2(const multisetSet aValuePatternSet){
                 isLastStructureOfStartingKnot = false;
                 do {
                     if (nextStructureOfStaringKnot()) {
-                        count++;
+                        
                         if ((yOffset.size() == 1) && (peersAtA.size() == 3)) {
                             isInitialStructureOfOtherKnot = false;
                             isLastStructureOfOtherKnot = false;
@@ -1522,10 +1591,11 @@ void MyTrailCoreInKernelAtC::Case33222C2(const multisetSet aValuePatternSet){
                                                 
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
-//                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                            if (workCore.back().partialWeight > 52) {
-                                                                outputTrailCore(fileName);
-                                                            }
+//                                                            if (workCore.back().partialWeight <= maxWeight) {
+                                                            cout<<"33222C2 weight:"<<workCore.back().partialWeight<<endl;
+                                                            outputTrailCore(fileName);
+                                                            count++;
+//                                                            }
                                                         }
                                                     }
                                                 }
@@ -1559,7 +1629,7 @@ void MyTrailCoreInKernelAtC::Case33222C2(const multisetSet aValuePatternSet){
             }
             
         }
-        cout<<"structure for a value pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
+        cout<<"total trails:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
         counts.push_back(count);
     }
 }
@@ -1567,6 +1637,7 @@ void MyTrailCoreInKernelAtC::Case33222C2(const multisetSet aValuePatternSet){
 void MyTrailCoreInKernelAtC::Case33222D1(const multisetSet aValuePatternSet, const multisetSet aValuePatternSet2){
     
     multisetSet :: iterator itOneValuePattern,itOneValuePattern2;
+    valuepatterncount=0;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
         cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
@@ -1642,8 +1713,9 @@ void MyTrailCoreInKernelAtC::Case33222D1(const multisetSet aValuePatternSet, con
                                                                                         
                                                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                                                             prepareOutputTrailCore();
-                                                                                            //                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                                                            if (workCore.back().partialWeight > 52) {
+                                                                                            
+                                                                                            if (workCore.back().partialWeight <= maxWeight) {
+                                                                                                cout<<"33222D1 weight:"<<workCore.back().partialWeight<<endl;
                                                                                                 outputTrailCore(fileName);
                                                                                             }
                                                                                         }
@@ -1696,7 +1768,7 @@ void MyTrailCoreInKernelAtC::Case33222D1(const multisetSet aValuePatternSet, con
             }
             
         }
-        cout<<"structure for a value pattern count"<<endl;
+        cout<<"structure for a value pattern count:"<<count<<endl;
         counts.push_back(count);
     }
 }
@@ -1704,6 +1776,7 @@ void MyTrailCoreInKernelAtC::Case33222D1(const multisetSet aValuePatternSet, con
 
 void MyTrailCoreInKernelAtC::Case33222D2(const multisetSet aValuePatternSet){
     multisetSet :: iterator itOneValuePattern;
+    valuepatterncount=0;
     for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
         valuepatterncount++;
         cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
@@ -1738,8 +1811,8 @@ void MyTrailCoreInKernelAtC::Case33222D2(const multisetSet aValuePatternSet){
                                                         
                                                         if (updateSetOfMinimalStatesUpToNow()) {
                                                             prepareOutputTrailCore();
-                                                            //                                                            if ((workCore.back().partialWeight <= maxWeight) && (workCore.back().partialWeight > 52)) {
-                                                            if (workCore.back().partialWeight > 52) {
+                                                            if (workCore.back().partialWeight <= maxWeight) {
+                                                                cout<<"33222D2 weight:"<<workCore.back().partialWeight<<endl;
                                                                 outputTrailCore(fileName);
                                                             }
                                                         }
@@ -1781,42 +1854,81 @@ void MyTrailCoreInKernelAtC::Case33222D2(const multisetSet aValuePatternSet){
 
 
 void MyTrailCoreInKernelAtC::test(){
-    //    XPeers2Slices(valuePatternSet3);//Checked
-    //
-    //    XPeers2Slices(valuePatternSet4);//Searched but not Checked
-    //    Case422(valuePatternSet4);//Checked, Correct
-    //    Case332();//Checked, Correct
-    //    XPeers2Slices(valuePatternSet5);//Searched but not Checked//no such combination
-    //    Case532(valuePatternSet5);
-    //    Case442();
-    //    Case433(valuePatternSet4);
-    //    Case4222(valuePatternSet4);
-    //    Case3322A(valuePatternSet3);
-    //    Case3322B(valuePatternSet3);
-    //    Case3322C(valuePatternSet3);
+
     clock_t start, finish;
     double duration;
     start = clock();
     
-//    Case633(valuePatternSet6);//checked
-    XorbitalsPerslice2Bits(valuePatternSet2, 7);
-//    Case4222(valuePatternSet4);
-//    Case42222B(valuePatternSet4);//checked
-//    Case33222A(valuePatternSet3,valuePatternSet2);
-//    Case33222B(valuePatternSet3);//checked
-//    Case33222C1(valuePatternSet3,valuePatternSet2);//checked
-//    Case33222C2(valuePatternSet3);//checked
-//    Case33222D1(valuePatternSet3,valuePatternSet2);
-//    Case33222D2(valuePatternSet3);//checked
-//    Case42222C(valuePatternSet4);//checked
-//    Case42222A(valuePatternSet4,valuePatternSet2);
+
+
+//    cout << "Case6x!" << endl;
+//    Case6x(valuePatternSet6);//checked no such combination <= 60
+//    Case42222A(valuePatternSet4,valuePatternSet2);//none
+//    cout << "Case42222B!" << endl;
+//    Case42222B(valuePatternSet4);//checked no such combination <= 60
+//    cout << "Case42222C!" << endl;
+//    Case42222C(valuePatternSet4);//checked no such combination <= 60
+    
+//    cout << "Case33222A!" << endl;
+//    Case33222A(valuePatternSet3,valuePatternSet2);//none <= 60
+
+//    cout << "Case33222B!" << endl;
+//    Case33222B(valuePatternSet3);//checked no such combination <= 60，66
+//    cout << "Case33222C1!" << endl;
+//    Case33222C1(valuePatternSet3,valuePatternSet2);//checked no such combination <= 60
+//    cout << "Case33222C2!" << endl;
+//    Case33222C2(valuePatternSet3);//checked one trail 58 <=60, 61
+//    cout << "Case33222D1!" << endl;
+//    Case33222D1(valuePatternSet3,valuePatternSet2);//checked no such combination <= 60
+//    cout << "Case33222D2!" << endl;
+//    Case33222D2(valuePatternSet3);//checked no such combination <= 60
+
+
 
 //    Case22(valuePatternSet2);//checked
 
-//    Case222(valuePatternSet2);
+//    Case222(valuePatternSet2);//checked
+    
+
+//    XorbitalsPerslice2Bits(valuePatternSet2, 7);//76
+//    cout << "Case222222!" << endl;
+//    XorbitalsPerslice2Bits(valuePatternSet2, 6);//none<= 60
+//    cout << "Chains!" << endl;
+//    XorbitalsPerslice2Bits(valuePatternSet2, 5);
+//    XorbitalsPerslice2Bits(valuePatternSet2, 4);
+//    XorbitalsPerslice2Bits(valuePatternSet2, 3);
+//    cout << "XPeers2Slices!" << endl;
+//    XPeers2Slices(valuePatternSet3);//Checked
+//    cout << "Case66!" << endl;
+//    XPeers2Slices(valuePatternSet6);
+//    XPeers2Slices(valuePatternSet5);//Searched but not Checked//no such combination
+//    XPeers2Slices(valuePatternSet4);
+//    XPeers2Slices(valuePatternSet2);//equal to chain 2
+//
+//    cout << "422!" << endl;
+//    Case422(valuePatternSet4);//Checked, Correct
+//    cout << "442!" << endl;
+//    Case442();
+//    cout << "433!" << endl;
+//    Case433(valuePatternSet4);
+//    cout << "4222!" << endl;
+//    Case4222(valuePatternSet4);
+//
+//
+//
+//    cout << "5!" << endl;
+//    Case532(valuePatternSet5);//checked
+//    cout << "3!" << endl;
+//    Case332();//Checked, Correct
+    cout << "3322A!" << endl;
+    Case3322A(valuePatternSet3);
+//    cout << "3322B!" << endl;//Checked, Correct
+//    Case3322B(valuePatternSet3);
+//    cout << "3322C!" << endl;
+//    Case3322C(valuePatternSet3);//Checked, Correct
     finish = clock();
     duration = (double)(finish-start)/CLOCKS_PER_SEC;
     printf("%f seconds\n", duration);
     //    XPeers2Slices(valuePatternSet6);
-    cout << "Hi!" << endl;
+    cout << "End!" << endl;
 }
