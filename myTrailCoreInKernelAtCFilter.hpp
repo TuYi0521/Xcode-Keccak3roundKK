@@ -53,6 +53,20 @@ public:
     bool filterOnPeerRhoOffset_33222D1();
     bool filterOnPeerRhoOffset_33222D2();
     
+    bool filterOnPeerRhoOffset_5322A();
+    bool filterOnPeerRhoOffset_5322B();
+    
+    bool filterOnPeerRhoOffset_4422A();
+    bool filterOnPeerRhoOffset_4422B();
+    
+    bool filterOnPeerRhoOffset_4332A();
+    bool filterOnPeerRhoOffset_4332B();
+    bool filterOnPeerRhoOffset_4332C();
+    
+    bool filterOnPeerRhoOffset_3333A();
+    bool filterOnPeerRhoOffset_3333B();
+    bool filterOnPeerRhoOffset_3333C();
+    
     bool filterOnPeerRhoOffset_3322A();
     bool filterOnPeerRhoOffset_3322B();
     bool filterOnPeerRhoOffset_3322C();
@@ -62,6 +76,7 @@ public:
     bool filterOnPeerRhoOffset_6x();
     
     bool checkMappedToSameSlice3322C();
+    bool checkMappedToSameSliceAfterRhoPi(BitPosition p1, BitPosition p2, BitPosition p3, BitPosition p4);
     bool checkMappedToSameSliceAfterRhoPi(BitPosition p1, BitPosition p2, BitPosition p3);
     bool checkMappedToSameSliceAfterRhoPi(BitPosition p1, BitPosition p2);
     

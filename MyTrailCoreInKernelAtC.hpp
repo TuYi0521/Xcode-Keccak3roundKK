@@ -51,6 +51,22 @@ public:
     void Case33222D1(const multisetSet aValuePatternSetForStartingknot,const multisetSet aValuePatternSetForStartingknot2);
     void Case33222D2(const multisetSet aValuePatternSetForStartingknot);
     
+    void Case5322A(const multisetSet aValuePatternSetForStartingknot);
+    void Case5322B(const multisetSet aValuePatternSetForStartingknot);
+    
+    void Case4422A(const multisetSet aValuePatternSetForStartingknot);
+    void Case4422B(const multisetSet aValuePatternSetForStartingknot);
+    
+    void Case4332A(const multisetSet aValuePatternSetForStartingknot, const multisetSet aValuePatternSet2);
+    void Case4332B(const multisetSet aValuePatternSetForStartingknot);
+    void Case4332C(const multisetSet aValuePatternSetForStartingknot);
+    
+    void Case3333A(const multisetSet aValuePatternSetForStartingknot, const multisetSet aValuePatternSet2);
+    void Case3333B(const multisetSet aValuePatternSetForStartingknot);
+    void Case3333C(const multisetSet aValuePatternSetForStartingknot);
+    
+
+    
     //for 6 orbitals
     void Case6x(const multisetSet aValuePatternSetForStartingKnot);
     void XorbitalsPerslice2Bits(const multisetSet aValuePatternSetForStartingKnot, unsigned int nrOrbitals);

@@ -95,7 +95,7 @@ public:
 
     bool nextP56OfOtherKnot42222B();
     void completeP56OfOtherKnot42222B();
-    
+
     bool nextP56OfOtherKnot42222C();
     void completeP56OfOtherKnot42222C();
     
@@ -126,6 +126,17 @@ public:
     bool nextP456OfOtherKnot33222D2();
     void completeP456OfOtherKnot33222D2();
     
+    bool nextP6Q6OfOtherKnot5322A();
+    void completeP6Q6OfOtherKnot5322A();
+    
+    bool nextP6Q6OfOtherKnot5322B();
+    void completeP6Q6OfOtherKnot5322B();
+    
+    bool nextP56OfOtherKnot4422A();
+    void completeP56OfOtherKnot4422A();
+    
+    bool nextP56OfOtherKnot4422B();
+    void completeP56OfOtherKnot4422B();
     
     bool nextStructureOfOtherKnot3322C(BitPosition & Q4B, const BitPosition Q1B);
     void completeStructureOfOtherKnot3322C(const BitPosition Q4B);

@@ -404,7 +404,7 @@ void InKernelAtCStructureConstruct:: initializeValuePatterns(void)
     generateValidSliceValuePattern(3, valuePatternSet3);
     generateValidSliceValuePattern(4, valuePatternSet4);
     generateValidSliceValuePattern(5, valuePatternSet5);
-    generateValidSliceValuePattern(6, valuePatternSet6);
+//    generateValidSliceValuePattern(6, valuePatternSet6);
     
 //        printValueSlicePattern(valuePatternSet2);
 //        printValueSlicePattern(valuePatternSet3);
@@ -1340,6 +1340,165 @@ void InKernelAtCStructureConstruct::completeP56OfOtherKnot42222B(){
     }
 }
 
+bool InKernelAtCStructureConstruct::nextP56OfOtherKnot4422A(){
+    if (!isInitialStructureOfOtherKnot) {
+        vector<BitPosition> aPeerB, aPeerC;
+        vector<unsigned int> aYOffset;
+        
+        
+        
+        BitPosition p6B(peersAtA[3].back());//q4
+        p6B.directRhoPi();//q4"
+        aYOffset.push_back(1);
+        p6B.yTranslate(aYOffset.back());//p6"
+        p6B.inverseRhoPi();//p6
+        aPeerC.push_back(p6B);
+        aYOffset.push_back(1);
+        p6B.yTranslate(aYOffset.back());//q6
+        aPeerC.push_back(p6B);
+        
+        BitPosition p5B(p6B);//q6
+        p5B.directRhoPi();//q6"
+        aYOffset.push_back(1);
+        p5B.yTranslate(aYOffset.back());//p5"
+        p5B.inverseRhoPi();//p5
+        aPeerB.push_back(p5B);
+        aYOffset.push_back(1);
+        p5B.yTranslate(aYOffset.back());//q5
+        aPeerB.push_back(p5B);
+        
+        peersAtA.push_back(aPeerB); //p5q5
+        addPeerParameterOnRho(aPeerB);
+        peersAtA.push_back(aPeerC);
+        addPeerParameterOnRho(aPeerC);//p6q6
+        yOffset.push_back(aYOffset);
+        
+        isInitialStructureOfOtherKnot = true;
+        return true;
+    }
+    else {
+        if (recursiveYOffsetOfStartingKnot(yOffset.back())) {
+            completeP56OfOtherKnot4422A();
+            return true;
+        }
+        else {
+            isLastStructureOfOtherKnot = true;
+            return false;
+        }
+    }
+}
+void InKernelAtCStructureConstruct::completeP56OfOtherKnot4422A(){
+    if (yOffset.back().size() == 4) {
+        vector<BitPosition> aPeerB, aPeerC;
+        
+        
+        BitPosition p6B(peersAtA[3].back());//q4
+        p6B.directRhoPi();//q4"
+        p6B.yTranslate(yOffset.back()[0]);//p6"
+        p6B.inverseRhoPi();//p6
+        aPeerC.push_back(p6B);
+
+        p6B.yTranslate(yOffset.back()[1]);//q6
+        aPeerC.push_back(p6B);
+        
+        BitPosition p5B(p6B);//q6
+        p5B.directRhoPi();//q6"
+        p5B.yTranslate(yOffset.back()[2]);//p5"
+        p5B.inverseRhoPi();//p5
+        aPeerB.push_back(p5B);
+        p5B.yTranslate(yOffset.back()[3]);//q5
+        aPeerB.push_back(p5B);
+        
+        peersAtA.push_back(aPeerB);
+        addPeerParameterOnRho(aPeerB);
+        peersAtA.push_back(aPeerC);
+        addPeerParameterOnRho(aPeerC);
+    }
+    else {
+        cout << "Error in size of yOffset[1] in complete other knots! " << endl;
+    }
+}
+
+
+bool InKernelAtCStructureConstruct::nextP56OfOtherKnot4422B(){
+    if (!isInitialStructureOfOtherKnot) {
+        vector<BitPosition> aPeerB, aPeerC;
+        vector<unsigned int> aYOffset;
+        
+        BitPosition p5B(peersAtA[2].back());//q3
+        p5B.directRhoPi();//q3"
+        aYOffset.push_back(1);
+        p5B.yTranslate(aYOffset.back());//p5"
+        p5B.inverseRhoPi();//p5
+        aPeerB.push_back(p5B);
+        aYOffset.push_back(1);
+        p5B.yTranslate(aYOffset.back());//q5
+        aPeerB.push_back(p5B);
+        
+        BitPosition p6B(peersAtA[3].back());//q4
+        p6B.directRhoPi();//q4"
+        aYOffset.push_back(1);
+        p6B.yTranslate(aYOffset.back());//p6"
+        p6B.inverseRhoPi();//p6
+        aPeerC.push_back(p6B);
+        aYOffset.push_back(1);
+        p6B.yTranslate(aYOffset.back());//q6
+        aPeerC.push_back(p6B);
+        
+        peersAtA.push_back(aPeerB); //p5q5
+        addPeerParameterOnRho(aPeerB);
+        peersAtA.push_back(aPeerC);
+        addPeerParameterOnRho(aPeerC);//p6q6
+        yOffset.push_back(aYOffset);
+        
+        isInitialStructureOfOtherKnot = true;
+        return true;
+    }
+    else {
+        if (recursiveYOffsetOfStartingKnot(yOffset.back())) {
+            completeP56OfOtherKnot4422B();
+            return true;
+        }
+        else {
+            isLastStructureOfOtherKnot = true;
+            return false;
+        }
+    }
+}
+void InKernelAtCStructureConstruct::completeP56OfOtherKnot4422B(){
+    if (yOffset.back().size() == 4) {
+        vector<BitPosition> aPeerB, aPeerC;
+        
+        BitPosition p5B(peersAtA[2].back());//q3
+        p5B.directRhoPi();//q3"
+        p5B.yTranslate(yOffset.back()[0]);//p5"
+        p5B.inverseRhoPi();//p5
+        aPeerB.push_back(p5B);
+        p5B.yTranslate(yOffset.back()[1]);//q5
+        aPeerB.push_back(p5B);
+        
+        BitPosition p6B(peersAtA[3].back());//q4
+        p6B.directRhoPi();//q4"
+        p6B.yTranslate(yOffset.back()[2]);//p6"
+        p6B.inverseRhoPi();//p6
+        aPeerC.push_back(p6B);
+        
+        p6B.yTranslate(yOffset.back()[3]);//q6
+        aPeerC.push_back(p6B);
+        
+        peersAtA.push_back(aPeerB);
+        addPeerParameterOnRho(aPeerB);
+        peersAtA.push_back(aPeerC);
+        addPeerParameterOnRho(aPeerC);
+    }
+    else {
+        cout << "Error in size of yOffset[1] in complete other knots! " << endl;
+    }
+}
+
+
+
+
 
 bool InKernelAtCStructureConstruct::nextP56OfOtherKnot42222C(){
     if (!isInitialStructureOfOtherKnot) {
@@ -1903,8 +2062,122 @@ void InKernelAtCStructureConstruct::completeP456OfOtherKnot33222D2(){
     }
 }
 
+bool InKernelAtCStructureConstruct::nextP6Q6OfOtherKnot5322A(){
+    if (!isInitialStructureOfOtherKnot) {
+        vector<BitPosition> aPeerA;
+        vector<unsigned int> aYOffset;
+        BitPosition p3B(peersAtA[3].back());//q4
+        p3B.directRhoPi();//q4"
+        aYOffset.push_back(1);
+        p3B.yTranslate(aYOffset.back());//p6"
+        p3B.inverseRhoPi();//p6
+        aPeerA.push_back(p3B);
+        aYOffset.push_back(1);
+        p3B.yTranslate(aYOffset.back());//q6
+        aPeerA.push_back(p3B);
+        
+        
+        
+        
+        peersAtA.push_back(aPeerA);
+        addPeerParameterOnRho(aPeerA);
+        
+        yOffset.push_back(aYOffset);
+        
+        isInitialStructureOfOtherKnot = true;
+        return true;
+    }
+    else {
+        if (recursiveYOffsetOfStartingKnot(yOffset.back())) {
+            completeP6Q6OfOtherKnot5322A();
+            return true;
+        }
+        else {
+            isLastStructureOfOtherKnot = true;
+            return false;
+        }
+    }
+}
+void InKernelAtCStructureConstruct::completeP6Q6OfOtherKnot5322A(){
+    if (yOffset.back().size() == 2) {
+        vector<BitPosition> aPeerA;
+        
+        
+        BitPosition p3B(peersAtA[3].back());//q4
+        p3B.directRhoPi();//q4"
+        p3B.yTranslate(yOffset.back()[0]);//p6"
+        p3B.inverseRhoPi();//p6
+        aPeerA.push_back(p3B);
+        p3B.yTranslate(yOffset.back()[1]);//q6
+        aPeerA.push_back(p3B);
+        
+        
+        
+        peersAtA.push_back(aPeerA);
+        addPeerParameterOnRho(aPeerA);
+    }
+    else {
+        cout << "Error in size of yOffset[1] in complete other knots! " << endl;
+    }
+}
 
-
+bool InKernelAtCStructureConstruct::nextP6Q6OfOtherKnot5322B(){
+    if (!isInitialStructureOfOtherKnot) {
+        vector<BitPosition> aPeerA;
+        vector<unsigned int> aYOffset;
+        BitPosition p3B(peersAtA[2].back());//q3
+        p3B.directRhoPi();//q4"
+        aYOffset.push_back(1);
+        p3B.yTranslate(aYOffset.back());//p6"
+        p3B.inverseRhoPi();//p6
+        aPeerA.push_back(p3B);
+        aYOffset.push_back(1);
+        p3B.yTranslate(aYOffset.back());//q6
+        aPeerA.push_back(p3B);
+        
+        
+        
+        
+        peersAtA.push_back(aPeerA);
+        addPeerParameterOnRho(aPeerA);
+        
+        yOffset.push_back(aYOffset);
+        
+        isInitialStructureOfOtherKnot = true;
+        return true;
+    }
+    else {
+        if (recursiveYOffsetOfStartingKnot(yOffset.back())) {
+            completeP6Q6OfOtherKnot5322B();
+            return true;
+        }
+        else {
+            isLastStructureOfOtherKnot = true;
+            return false;
+        }
+    }
+}
+void InKernelAtCStructureConstruct::completeP6Q6OfOtherKnot5322B(){
+    if (yOffset.back().size() == 2) {
+        vector<BitPosition> aPeerA;
+        
+        
+        BitPosition p3B(peersAtA[2].back());//q3
+        p3B.directRhoPi();//q4"
+        p3B.yTranslate(yOffset.back()[0]);//p6"
+        p3B.inverseRhoPi();//p6
+        aPeerA.push_back(p3B);
+        p3B.yTranslate(yOffset.back()[1]);//q6
+        aPeerA.push_back(p3B);
+        
+        
+        peersAtA.push_back(aPeerA);
+        addPeerParameterOnRho(aPeerA);
+    }
+    else {
+        cout << "Error in size of yOffset[1] in complete other knots! " << endl;
+    }
+}
 
 bool InKernelAtCStructureConstruct::nextStructureOfOtherKnot(){
     if (!isInitialStructureOfOtherKnot) {
@@ -2016,6 +2289,27 @@ bool InKernelAtCStructureConstruct::updateStartingKnot(const unsigned int choose
             return false;
         }
     }
+    else if (chooseCode==53221) {
+        vector<vector<unsigned int>> combinationDeterminator = {
+            {0,1,2,3,4}, {0,1,3,2,4}, {0,2,3,1,4}, {1,2,3,0,4}, {0,1,4,2,3}, {0,2,4,1,3}, {1,2,4,0,3}, {0,3,4,1,2}, {1,3,4,0,2}, {2,3,4,0,1}
+        };
+        totalCounter = startingKnotPoints.size();
+        
+        
+        if ((startingKnotUpdateCounter <= 10) && (totalCounter == 5)) {
+            for (int i = 0; i < totalCounter; i++) {
+                startingKnotPoints[i] = aKnotPoints[combinationDeterminator[startingKnotUpdateCounter - 1][i]];
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    
+    
+    
 //    else if (<#condition#>) {
 //
 //    }

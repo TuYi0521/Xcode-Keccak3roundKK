@@ -123,6 +123,7 @@ void MyTrailCoreInKernelAtC::Case532(const multisetSet aValuePatternSet){
                                 if (updateSetOfMinimalStatesUpToNow()) {
                                     prepareOutputTrailCore();
                                     if (workCore.back().partialWeight <= maxWeight) {
+                                        cout<<"532 weight:"<<workCore.back().partialWeight<<endl;
                                         outputTrailCore(fileName);
                                     }
                                 }
@@ -1851,6 +1852,486 @@ void MyTrailCoreInKernelAtC::Case33222D2(const multisetSet aValuePatternSet){
     }
 }
 
+void MyTrailCoreInKernelAtC::Case5322A(const multisetSet aValuePatternSet){
+    multisetSet :: iterator itOneValuePattern;
+    valuepatterncount=0;
+    count = 0;
+    for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        valuepatterncount++;
+        cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
+        
+        set<SliceValue> allSlicePatternsForOneValuePattern;
+        getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
+        
+        set<SliceValue> :: iterator itOneSlicePattern;
+        for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            startingKnotPoints.clear();
+            yOffset.clear();
+            //bit position
+            getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
+            count = 0;
+            startingKnotUpdateCounter = 0;
+            while (updateStartingKnot(53221)) {
+                isInitialStructure = false;
+                isLastStructureOfStartingKnot = false;
+
+                do {
+                    if (nextStructureOfStaringKnot()) {
+                        count++;
+                        if ((yOffset.size() == 1) && (peersAtA.size() == 5)) {
+                            if (checkMappedToSameSliceAfterRhoPi(peersAtA[0].back(), peersAtA[1].back(), peersAtA[2].back())) {
+                                isInitialStructureOfOtherKnot = false;
+                                isLastStructureOfOtherKnot = false;
+                                do {
+                                    if ((peersAtA.size() == 5) && (peerParameterOnRho.size() == 5)) {
+                                        if (nextP6Q6OfOtherKnot5322A()){
+                                            if ((peersAtA.size()==6) && (peerParameterOnRho.size()==6)) {
+                                                //
+                                                BitPosition q5B(peersAtA[4].back());//q[nrObitals-1] at A
+                                                q5B.directRhoPi();//q at B
+                                                BitPosition q6B(peersAtA[5].back());//p[0] at A
+                                                q6B.directRhoPi();//p at B
+                                                
+                                                if (checkMappedToSameOrbital(q5B, q6B)) {
+                                                    if (filterOnPeerRhoOffset_5322A()) {
+                                                        knotsAtB.clear();
+                                                        if (checkKnotsAtBInKernelAtC()) {
+                                                            if (knotsAtB.size()==4) {
+                                                                
+                                                                if (updateSetOfMinimalStatesUpToNow()) {
+                                                                    prepareOutputTrailCore();
+                                                                    cout<<"5322A weight:"<<workCore.back().partialWeight<<endl;
+                                                                    if (workCore.back().partialWeight <= maxWeight) {
+                                                                        
+                                                                        outputTrailCore(fileName);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else {
+                                                cout << "Error in size of other knot stage!" << endl;
+                                            }
+                                            peersAtA.pop_back();
+                                            peerParameterOnRho.pop_back();
+                                        }
+                                        
+                                        
+                                    }
+                                    else {
+                                        cout << "Error in size on peersAtA!" << endl;
+                                    }
+                                } while (!isLastStructureOfOtherKnot);
+                                yOffset.pop_back();
+                            }
+                        }
+                        else {
+                            cout << "Error in yoffset or peersAtA!" << endl;
+                            
+                        }
+                    }
+                } while (!isLastStructureOfStartingKnot);
+                yOffset.pop_back();
+            }
+        }
+        
+        cout<<"structure for a value pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
+        counts.push_back(count);
+    }
+}
+
+void MyTrailCoreInKernelAtC::Case5322B(const multisetSet aValuePatternSet){
+    multisetSet :: iterator itOneValuePattern;
+    valuepatterncount=0;
+    count = 0;
+    for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        valuepatterncount++;
+        cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
+        
+        set<SliceValue> allSlicePatternsForOneValuePattern;
+        getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
+        
+        set<SliceValue> :: iterator itOneSlicePattern;
+        for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            startingKnotPoints.clear();
+            yOffset.clear();
+            //bit position
+            getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
+            count = 0;
+            startingKnotUpdateCounter = 0;
+            while (updateStartingKnot(53221)) {
+                vector<BitPosition> aKnotPoints = startingKnotPoints;
+                for (int i = 0; i<3; i++) {
+                    startingKnotPoints[i] = aKnotPoints[(i+1)%3];// q1 q2 q3
+                    isInitialStructure = false;
+                    isLastStructureOfStartingKnot = false;
+                
+                    do {
+                        if (nextStructureOfStaringKnot()) {
+                            count++;
+                            if ((yOffset.size() == 1) && (peersAtA.size() == 5)) {
+                                BitPosition q4B(peersAtA[3].back());//q[nrObitals-1] at A
+                                q4B.directRhoPi();//q at B
+                                BitPosition q5B(peersAtA[4].back());//p[0] at A
+                                q5B.directRhoPi();//p at B
+                                if (checkMappedToSameOrbital(q4B, q5B)) {
+                                    isInitialStructureOfOtherKnot = false;
+                                    isLastStructureOfOtherKnot = false;
+                                    do {
+                                        if ((peersAtA.size() == 5) && (peerParameterOnRho.size() == 5)) {
+                                            if (nextP6Q6OfOtherKnot5322B()){
+                                                if ((peersAtA.size()==6) && (peerParameterOnRho.size()==6)) {
+                                                    //
+                                                    
+                                                    
+                                                    if (checkMappedToSameSliceAfterRhoPi(peersAtA[0].back(), peersAtA[1].back(), peersAtA[5].back())) {
+                                                        if (filterOnPeerRhoOffset_5322B()) {
+                                                            knotsAtB.clear();
+                                                            if (checkKnotsAtBInKernelAtC()) {
+                                                                if (knotsAtB.size()==4) {
+                                                                    
+                                                                    if (updateSetOfMinimalStatesUpToNow()) {
+                                                                        prepareOutputTrailCore();
+                                                                        cout<<"5322B weight:"<<workCore.back().partialWeight<<endl;
+                                                                        if (workCore.back().partialWeight <= maxWeight) {
+                                                                            
+                                                                            outputTrailCore(fileName);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else {
+                                                    cout << "Error in size of other knot stage!" << endl;
+                                                }
+                                                peersAtA.pop_back();
+                                                peerParameterOnRho.pop_back();
+                                            }
+                                            
+                                            
+                                        }
+                                        else {
+                                            cout << "Error in size on peersAtA!" << endl;
+                                        }
+                                    } while (!isLastStructureOfOtherKnot);
+                                    yOffset.pop_back();
+                                }
+                            }
+                            else {
+                                cout << "Error in yoffset or peersAtA!" << endl;
+                                
+                            }
+                        }
+                    } while (!isLastStructureOfStartingKnot);
+                    yOffset.pop_back();
+                }
+            }
+        }
+        
+        cout<<"structure for a value pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
+        counts.push_back(count);
+    }
+}
+
+void MyTrailCoreInKernelAtC::Case4422A(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
+    multisetSet :: iterator itOneValuePattern;
+    for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        set<SliceValue> allSlicePatternsForOneValuePattern;
+        getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
+        
+        valuepatterncount++;
+        cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
+        
+        set<SliceValue> :: iterator itOneSlicePattern;
+        slicepatternForAvaluepattern=0;
+        for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            startingKnotPoints.clear();
+            yOffset.clear();
+            getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
+            startingKnotUpdateCounter = 0;
+            //updateStartingKnot里面额结构是怎么运作的
+            count=0;
+            slicepatternForAvaluepattern++;
+            while (updateStartingKnot(442)) {
+                isInitialStructure = false;
+                isLastStructureOfStartingKnot = false;
+                do {
+                    //改变yoffset[0]来构造starting knot 里的p点对应的q点
+                    
+                    if (nextStructureOfStaringKnot()) {
+                        count++;
+                        isInitialStructureOfOtherKnot = false;
+                        isLastStructureOfOtherKnot = false;
+                        
+                        if ((peersAtA.size() == 4) && (peerParameterOnRho.size() == 4)) {
+                            do {
+                                if (nextP56OfOtherKnot4422A()){
+                                    if ((yOffset.size() == 2) && (peersAtA.size() == 6)) {
+                                        if ((peersAtA.size() == 6) && (peerParameterOnRho.size() == 6)) {
+                                            if (checkMappedToSameSliceAfterRhoPi( peersAtA[0].back(), peersAtA[1].back(), peersAtA[2].back(), peersAtA[4].back() )) {
+                                            
+                                                if (filterOnPeerRhoOffset_4422A()) {
+                                                    knotsAtB.clear();
+                                                    if (checkKnotsAtBInKernelAtC()) {
+                                                        if (knotsAtB.size()==4) {
+                                                            
+                                                            if (updateSetOfMinimalStatesUpToNow()) {
+                                                                prepareOutputTrailCore();
+                                                                if (workCore.back().partialWeight <= maxWeight) {
+                                                                    cout<<"4422A weight:"<<workCore.back().partialWeight<<endl;
+                                                                    outputTrailCore(fileName);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            peersAtA.pop_back();
+                                            peersAtA.pop_back();
+                                            peerParameterOnRho.pop_back();
+                                            peerParameterOnRho.pop_back();
+                                        }
+                                        else {
+                                            cout << "Error in size on peersAtA!" << endl;
+                                        }
+                                    }
+                                    
+                                    else {
+                                        cout << "Error in size of other knot stage!" << endl;
+                                    }
+                                    
+                                }
+                                
+                            }while (!isLastStructureOfOtherKnot);
+                            yOffset.pop_back();
+                        }
+                        else {
+                            cout << "Error in yoffset or peersAtA!" << endl;
+                            
+                        }
+                        
+                    }
+                }while (!isLastStructureOfStartingKnot);
+                yOffset.pop_back();
+            }
+            cout<<"structure for a value pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
+            counts.push_back(count);
+        }
+        cout<<"slice pattern counts for a value pattern:"<<slicepatternForAvaluepattern<<"= 2^"<<log(slicepatternForAvaluepattern)/log(2)<<endl;
+    }
+}
+
+void MyTrailCoreInKernelAtC::Case4422B(const multisetSet aValuePatternSet){
+    valuepatterncount=0;
+    multisetSet :: iterator itOneValuePattern;
+    for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        set<SliceValue> allSlicePatternsForOneValuePattern;
+        getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
+        
+        valuepatterncount++;
+        cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
+        
+        set<SliceValue> :: iterator itOneSlicePattern;
+        slicepatternForAvaluepattern=0;
+        for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            startingKnotPoints.clear();
+            yOffset.clear();
+            getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
+            startingKnotUpdateCounter = 0;
+            //updateStartingKnot里面额结构是怎么运作的
+            count=0;
+            slicepatternForAvaluepattern++;
+            while (updateStartingKnot(4222)) {
+                isInitialStructure = false;
+                isLastStructureOfStartingKnot = false;
+                do {
+                    //改变yoffset[0]来构造starting knot 里的p点对应的q点
+                    
+                    if (nextStructureOfStaringKnot()) {
+                        count++;
+                        isInitialStructureOfOtherKnot = false;
+                        isLastStructureOfOtherKnot = false;
+                        
+                        if ((peersAtA.size() == 4) && (peerParameterOnRho.size() == 4)) {
+                            do {
+                                if (nextP56OfOtherKnot42222C()){
+                                    if ((yOffset.size() == 2) && (peersAtA.size() == 6)) {
+                                        if ((peersAtA.size() == 6) && (peerParameterOnRho.size() == 6)) {
+                                            if (checkMappedToSameSliceAfterRhoPi( peersAtA[0].back(), peersAtA[1].back(), peersAtA[4].back(), peersAtA[6].back() )) {
+                                                
+                                                if (filterOnPeerRhoOffset_4422B()) {
+                                                    knotsAtB.clear();
+                                                    if (checkKnotsAtBInKernelAtC()) {
+                                                        if (knotsAtB.size()==4) {
+                                                            
+                                                            if (updateSetOfMinimalStatesUpToNow()) {
+                                                                prepareOutputTrailCore();
+                                                                if (workCore.back().partialWeight <= maxWeight) {
+                                                                    cout<<"4422A weight:"<<workCore.back().partialWeight<<endl;
+                                                                    outputTrailCore(fileName);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            peersAtA.pop_back();
+                                            peersAtA.pop_back();
+                                            peerParameterOnRho.pop_back();
+                                            peerParameterOnRho.pop_back();
+                                        }
+                                        else {
+                                            cout << "Error in size on peersAtA!" << endl;
+                                        }
+                                    }
+                                    
+                                    else {
+                                        cout << "Error in size of other knot stage!" << endl;
+                                    }
+                                    
+                                }
+                                
+                            }while (!isLastStructureOfOtherKnot);
+                            yOffset.pop_back();
+                        }
+                        else {
+                            cout << "Error in yoffset or peersAtA!" << endl;
+                            
+                        }
+                        
+                    }
+                }while (!isLastStructureOfStartingKnot);
+                yOffset.pop_back();
+            }
+            cout<<"structure for a value pattern count:"<<count<<"= 2^"<<log(count)/log(2)<<endl;
+            counts.push_back(count);
+        }
+        cout<<"slice pattern counts for a value pattern:"<<slicepatternForAvaluepattern<<"= 2^"<<log(slicepatternForAvaluepattern)/log(2)<<endl;
+    }
+}
+
+void MyTrailCoreInKernelAtC::Case4332A(const multisetSet aValuePatternSet, const multisetSet aValuePatternSet2){
+    multisetSet :: iterator itOneValuePattern,itOneValuePattern2;
+    valuepatterncount=0;
+    for (itOneValuePattern = aValuePatternSet.begin(); itOneValuePattern != aValuePatternSet.end(); itOneValuePattern ++) {
+        valuepatterncount++;
+        cout<<"value pattern count:"<<valuepatterncount<<" = 2^"<<log(valuepatterncount)/log(2) <<endl;
+        
+        set<SliceValue> allSlicePatternsForOneValuePattern;
+        getAllSlicePatternsFromAValuePattern((*itOneValuePattern), allSlicePatternsForOneValuePattern);
+        set<SliceValue> :: iterator itOneSlicePattern;
+        count=0;
+        for (itOneSlicePattern = allSlicePatternsForOneValuePattern.begin(); itOneSlicePattern != allSlicePatternsForOneValuePattern.end(); itOneSlicePattern ++) {
+            startingKnotPoints.clear();
+            yOffset.clear();
+            getKnotPointsFromSlice((*itOneSlicePattern), startingKnotPoints);
+            startingKnotUpdateCounter = 0;
+            //轮流做p3
+            while (updateStartingKnot(442)) {
+                isInitialStructure = false;
+                isLastStructureOfStartingKnot = false;
+                do {
+                    if (nextStructureOfStaringKnot()) {
+                        
+                        if ((yOffset.size() == 1) && (peersAtA.size() == 4)) {
+                            isInitialStructureOfOtherKnot = false;
+                            isLastStructureOfOtherKnot = false;
+                            //q1" q2" q3" same slice
+                            if (checkMappedToSameSliceAfterRhoPi( peersAtA[0].back(), peersAtA[1].back(), peersAtA[2].back())) {
+                                
+                                do {
+                                    if ((peersAtA.size() == 4) && (peerParameterOnRho.size() == 4)) {
+                                        //2 orbitals, validpatternset2
+                                        for (itOneValuePattern2 = aValuePatternSet2.begin(); itOneValuePattern2 != aValuePatternSet2.end(); itOneValuePattern2 ++) {
+                                            set<SliceValue> allSlicePatternsForOneValuePattern2;
+                                            getAllSlicePatternsFromAValuePattern((*itOneValuePattern2), allSlicePatternsForOneValuePattern2);
+                                            
+                                            set<SliceValue> :: iterator itOneSlicePattern2;
+                                            for (itOneSlicePattern2 = allSlicePatternsForOneValuePattern2.begin(); itOneSlicePattern2 != allSlicePatternsForOneValuePattern2.end(); itOneSlicePattern2 ++) {
+                                                startingKnotPoints2.clear();
+                                                //bit position
+                                                getKnotPointsFromSlice((*itOneSlicePattern2), startingKnotPoints2);
+                                                isInitialStructure2 = false;
+                                                isLastStructureOfStartingKnot2 = false;
+                                                do {
+                                                    //把p5p6弄进去
+                                                    //same with 33222C1 to construct p5 p6 q5 q6
+                                                    if (constructingStaringKnotfor2Orbitals()){
+                                                        for (int j = 1; j<64; j++) {
+                                                            peersAtA[4][0].z = (peersAtA[4][0].z +j)%64;
+                                                            peersAtA[4][1].z = (peersAtA[4][1].z +j)%64;
+                                                            peersAtA[5][0].z = (peersAtA[5][0].z +j)%64;
+                                                            peersAtA[5][1].z = (peersAtA[5][1].z +j)%64;
+                                                            
+                                                            
+                                                            //check q4 q5 q6 at B same slice
+                                                            if (checkMappedToSameSliceAfterRhoPi(peersAtA[3].back(), peersAtA[4].back(), peersAtA[5].back())) {
+                                                                
+                                                                if ((peersAtA.size()==6) && (peerParameterOnRho.size()==6)) {
+                                                                    
+                                                                    if (filterOnPeerRhoOffset_4332A()) {
+                                                                        knotsAtB.clear();
+                                                                        if (checkKnotsAtBInKernelAtC()) {
+                                                                            if (knotsAtB.size()==4) {
+                                                                                
+                                                                                if (updateSetOfMinimalStatesUpToNow()) {
+                                                                                    prepareOutputTrailCore();
+                                                                                    
+                                                                                    if (workCore.back().partialWeight <= maxWeight) {
+                                                                                        cout<<"33222D1 weight:"<<workCore.back().partialWeight<<endl;
+                                                                                        outputTrailCore(fileName);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    cout << "Error in size of other knot stage!" << endl;
+                                                                }
+                                                                
+                                                            }
+                                                        }
+                                                        
+                                                        peersAtA.pop_back();
+                                                        peerParameterOnRho.pop_back();
+                                                        
+                                                        peersAtA.pop_back();
+                                                        peerParameterOnRho.pop_back();
+                                                    }
+                                                } while (!isLastStructureOfStartingKnot2);
+                                                yOffset.pop_back();
+                                            }
+                                        }
+                                        
+                                    }
+                                    else {
+                                        cout << "Error in peersAtA.size() == 4!" << endl;
+                                    }
+                                } while (!isLastStructureOfOtherKnot);
+                                yOffset.pop_back();
+                            }
+                        }
+                        else {
+                            cout << "Error in yoffset or peersAtA!" << endl;
+                            
+                        }
+                    }
+                } while (!isLastStructureOfStartingKnot);
+                yOffset.pop_back();
+            }
+            
+        }
+        cout<<"structure for a value pattern count:"<<count<<endl;
+        counts.push_back(count);
+    }
+}
+
 
 
 void MyTrailCoreInKernelAtC::test(){
@@ -1859,8 +2340,19 @@ void MyTrailCoreInKernelAtC::test(){
     double duration;
     start = clock();
     
-
-
+//    cout << "Case5322A!" << endl;
+//    Case5322A(valuePatternSet5);//checked 58
+    cout << "Case5322B!" << endl;
+    Case5322B(valuePatternSet5);//checked 57
+    
+    cout << "Case4422A!" << endl;
+    Case4422A(valuePatternSet4);
+    
+    cout << "Case4422B!" << endl;
+    Case4422B(valuePatternSet4);
+    
+    
+    
 //    cout << "Case6x!" << endl;
 //    Case6x(valuePatternSet6);//checked no such combination <= 60
 //    Case42222A(valuePatternSet4,valuePatternSet2);//none
@@ -1920,8 +2412,8 @@ void MyTrailCoreInKernelAtC::test(){
 //    Case532(valuePatternSet5);//checked
 //    cout << "3!" << endl;
 //    Case332();//Checked, Correct
-    cout << "3322A!" << endl;
-    Case3322A(valuePatternSet3);
+//    cout << "3322A!" << endl;
+//    Case3322A(valuePatternSet3);
 //    cout << "3322B!" << endl;//Checked, Correct
 //    Case3322B(valuePatternSet3);
 //    cout << "3322C!" << endl;

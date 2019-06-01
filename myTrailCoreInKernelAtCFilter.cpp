@@ -427,6 +427,150 @@ if (((peerParameterOnRho[0]+peerParameterOnRho[3])%64) == ((peerParameterOnRho[1
 
 
 
+bool InKernelAtCFilter::filterOnPeerRhoOffset_5322A(){
+    if ((peerParameterOnRho[0] == peerParameterOnRho[1]) && (peerParameterOnRho[0] == peerParameterOnRho[2])) {
+        if (peerParameterOnRho[4] == (peerParameterOnRho[5]+peerParameterOnRho[3])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_5322B(){
+    if ((peerParameterOnRho[0] == peerParameterOnRho[1]) && (peerParameterOnRho[3] == peerParameterOnRho[4])) {
+        if (peerParameterOnRho[0] == (peerParameterOnRho[5]+peerParameterOnRho[2])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_4422A(){
+  if ((peerParameterOnRho[0] == peerParameterOnRho[1]) && (peerParameterOnRho[0] == peerParameterOnRho[2])) {
+        if (peerParameterOnRho[0] == (peerParameterOnRho[3]+peerParameterOnRho[4]+peerParameterOnRho[6])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_4422B(){
+    if (peerParameterOnRho[0] == peerParameterOnRho[1]) {
+        if ((peerParameterOnRho[2]+peerParameterOnRho[4])%64 == (peerParameterOnRho[5]+peerParameterOnRho[3])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_4332A(){
+  if ((peerParameterOnRho[0] == peerParameterOnRho[1]) && (peerParameterOnRho[0] == peerParameterOnRho[2])) {
+        if (peerParameterOnRho[4] == peerParameterOnRho[5]) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_4332B(){
+    if ((peerParameterOnRho[0]) == (peerParameterOnRho[1]) && (peerParameterOnRho[2] == peerParameterOnRho[3])) {
+      if ((peerParameterOnRho[2]+peerParameterOnRho[4])%64 == (peerParameterOnRho[5]+peerParameterOnRho[0])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_4332C(){
+    if ((peerParameterOnRho[2]) == (peerParameterOnRho[3]) && (peerParameterOnRho[4] == peerParameterOnRho[5])) {
+        if (peerParameterOnRho[0] == (peerParameterOnRho[1]+peerParameterOnRho[4])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_3333A(){
+    if ((peerParameterOnRho[0]) == (peerParameterOnRho[2]) && (peerParameterOnRho[0] == peerParameterOnRho[1])) {
+        if ((peerParameterOnRho[3]) == (peerParameterOnRho[4]) && (peerParameterOnRho[3] == peerParameterOnRho[5])) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_3333B(){
+    if ((peerParameterOnRho[0] == peerParameterOnRho[1]) && (peerParameterOnRho[4] == peerParameterOnRho[5])) {
+      if ((peerParameterOnRho[2]+peerParameterOnRho[3])%64 == (peerParameterOnRho[0]+peerParameterOnRho[4])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::filterOnPeerRhoOffset_3333C(){
+    if ((peerParameterOnRho[1]) == (peerParameterOnRho[2]) && (peerParameterOnRho[4] == peerParameterOnRho[5])) {
+      if ((peerParameterOnRho[0]+peerParameterOnRho[3])%64 == (peerParameterOnRho[1]+peerParameterOnRho[4])%64) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+
 bool InKernelAtCFilter::filterOnPeerRhoOffset_3322A(){
     if ((peerParameterOnRho[0]) == (peerParameterOnRho[1])) {
         if ((peerParameterOnRho[2]) == ((peerParameterOnRho[0]+128-peerParameterOnRho[3]-peerParameterOnRho[4])%64)) {
@@ -488,6 +632,20 @@ bool InKernelAtCFilter::checkMappedToSameSliceAfterRhoPi(BitPosition p1, BitPosi
     p1.directRhoPi();
     p2.directRhoPi();
     if ((p1.z) == (p2.z)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+bool InKernelAtCFilter::checkMappedToSameSliceAfterRhoPi(BitPosition p1, BitPosition p2, BitPosition p3, BitPosition p4){
+    
+    p1.directRhoPi();
+    p2.directRhoPi();
+    p3.directRhoPi();
+    p4.directRhoPi();
+    if ((p1.z) == (p2.z) && (p1.z) == (p3.z) && (p1.z) == (p4.z)) {
         return true;
     }
     else {
